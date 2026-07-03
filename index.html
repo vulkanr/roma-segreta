@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4EFE6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151D1B" media="(prefers-color-scheme: dark)">
+<title>Roma Segreta — Family Day Trip</title>
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --bg:#F4EFE6;          /* travertine */
+  --card:#FDFBF6;
+  --ink:#26231C;         /* sampietrini basalt */
+  --muted:#6E675A;
+  --accent:#1E6F63;      /* verdigris — fountain bronze patina */
+  --accent-soft:#1E6F6318;
+  --food:#A8501F;        /* spritz, muted */
+  --food-soft:#A8501F16;
+  --teen:#A94373;        /* gelato pink, reserved for the girls' hunt */
+  --teen-soft:#A9437316;
+  --line:#DDD5C6;
+  --rail:#CFC6B4;
+  --done:#8A8375;
+  --shadow:0 1px 2px rgba(38,35,28,.06),0 4px 14px rgba(38,35,28,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#151D1B;        /* night by a fountain */
+    --card:#1D2725;
+    --ink:#EAE6DB;
+    --muted:#98A29B;
+    --accent:#5FC2B0;
+    --accent-soft:#5FC2B01F;
+    --food:#E08A55;
+    --food-soft:#E08A551C;
+    --teen:#E387B4;
+    --teen-soft:#E387B41C;
+    --line:#2C3835;
+    --rail:#37453F;
+    --done:#6C776F;
+    --shadow:0 1px 2px rgba(0,0,0,.25),0 4px 14px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151D1B; --card:#1D2725; --ink:#EAE6DB; --muted:#98A29B;
+  --accent:#5FC2B0; --accent-soft:#5FC2B01F;
+  --food:#E08A55; --food-soft:#E08A551C;
+  --teen:#E387B4; --teen-soft:#E387B41C;
+  --line:#2C3835; --rail:#37453F; --done:#6C776F;
+  --shadow:0 1px 2px rgba(0,0,0,.25),0 4px 14px rgba(0,0,0,.28);
+}
+:root[data-theme="light"]{
+  --bg:#F4EFE6; --card:#FDFBF6; --ink:#26231C; --muted:#6E675A;
+  --accent:#1E6F63; --accent-soft:#1E6F6318;
+  --food:#A8501F; --food-soft:#A8501F16;
+  --teen:#A94373; --teen-soft:#A9437316;
+  --line:#DDD5C6; --rail:#CFC6B4; --done:#8A8375;
+  --shadow:0 1px 2px rgba(38,35,28,.06),0 4px 14px rgba(38,35,28,.07);
+}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  padding-bottom:calc(76px + env(safe-area-inset-bottom));
+}
+.serif{font-family:"Iowan Old Style",Palatino,"Palatino Linotype","URW Palladio L",P052,Georgia,serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+a{color:var(--accent)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+
+/* ---------- header ---------- */
+header{padding:26px 0 10px;border-bottom:1px solid var(--line)}
+.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-family:"Iowan Old Style",Palatino,"Palatino Linotype","URW Palladio L",P052,Georgia,serif;
+   font-size:clamp(30px,9vw,40px);line-height:1.05;margin:6px 0 8px;font-weight:600;text-wrap:balance}
+.sub{color:var(--muted);font-size:14.5px;max-width:46ch;margin:0 0 14px}
+.progress{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.progress .bar{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.progress .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .4s ease}
+.progress .count{font-size:12.5px;color:var(--muted)}
+
+/* ---------- tabs ---------- */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  background:var(--card);border-top:1px solid var(--line);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));
+}
+nav .row{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+nav button{
+  padding:9px 4px 8px;border-radius:10px;text-align:center;
+  font-size:12.5px;font-weight:600;color:var(--muted);
+  display:flex;flex-direction:column;gap:2px;align-items:center;
+}
+nav button .glyph{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;font-size:17px;line-height:1;font-weight:600}
+nav button[aria-selected="true"]{color:var(--accent);background:var(--accent-soft)}
+
+/* ---------- panels ---------- */
+main section[role="tabpanel"]{display:none;padding-top:18px}
+main section[role="tabpanel"].active{display:block}
+h2{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;
+   font-size:22px;margin:26px 0 4px;font-weight:600;text-wrap:balance}
+.lede{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:52ch}
+
+/* ---------- itinerary rail ---------- */
+.stop{display:grid;grid-template-columns:56px 1fr;gap:0 12px;position:relative}
+.stop .when{
+  position:relative;padding-top:18px;text-align:right;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--muted);
+}
+.stop .when::after{
+  content:"";position:absolute;top:24px;bottom:-6px;right:-12px;width:2px;
+  background:var(--rail);transform:translateX(50%);
+}
+.stop:last-of-type .when::after{display:none}
+.stop .when::before{
+  content:"";position:absolute;top:19px;right:-12px;width:9px;height:9px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--accent);transform:translateX(50%);z-index:1;
+}
+.stop.done .when::before{background:var(--accent)}
+.stop .card{margin:8px 0}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.card > .head{
+  display:block;width:100%;text-align:left;padding:14px 14px 12px;
+}
+.card .titleRow{display:flex;align-items:baseline;gap:8px}
+.card h3{
+  font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;
+  font-size:18.5px;margin:0;font-weight:600;line-height:1.2;flex:1;text-wrap:balance;
+}
+.card .chev{color:var(--muted);font-size:12px;transition:transform .2s;flex:none;margin-top:2px}
+.card.open .chev{transform:rotate(180deg)}
+.card .area{font-size:12px;color:var(--muted);margin-top:2px}
+.card .hook{font-size:14px;color:var(--ink);margin:8px 0 0;max-width:56ch}
+.stop.done .card h3{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);
+}
+.chip.food{background:var(--food-soft);color:var(--food)}
+.chip.teen{background:var(--teen-soft);color:var(--teen)}
+.chip.warn{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
+
+.card .body{display:none;padding:0 14px 14px;border-top:1px solid var(--line)}
+.card.open .body{display:block}
+.card .body h4{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  margin:14px 0 4px;font-weight:700;
+}
+.card .body p{margin:0 0 6px;font-size:14.5px;max-width:58ch}
+.card .body p+p{margin-top:2px}
+.practical{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13.5px;margin-top:4px}
+.practical dt{color:var(--muted)}
+.practical dd{margin:0}
+.actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:10px;
+  border:1px solid var(--line);background:var(--bg);text-decoration:none;color:var(--ink);
+}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--card)}
+.btn.check[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+/* ---------- hunt ---------- */
+.score{
+  display:flex;align-items:baseline;gap:10px;margin:4px 0 14px;
+}
+.score .big{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:40px;font-weight:600;
+  font-variant-numeric:tabular-nums;color:var(--teen);line-height:1}
+.score .of{color:var(--muted);font-size:14px}
+.hunt-item{
+  display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow);
+}
+.hunt-item .box{
+  flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--teen);
+  margin-top:1px;display:grid;place-items:center;color:transparent;font-size:14px;font-weight:800;
+}
+.hunt-item[aria-pressed="true"] .box{background:var(--teen);color:var(--card)}
+.hunt-item .t{font-weight:600;font-size:14.5px}
+.hunt-item .d{font-size:13px;color:var(--muted);margin-top:1px}
+.hunt-item[aria-pressed="true"] .t{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
+
+/* ---------- food + tips ---------- */
+.plain{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);padding:14px 16px;margin-bottom:10px}
+.plain h3{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:17.5px;margin:0 0 2px;font-weight:600}
+.plain .where{font-size:12.5px;color:var(--muted)}
+.plain p{font-size:14px;margin:8px 0 0;max-width:56ch}
+.plain ul{margin:8px 0 0;padding-left:18px;font-size:14px}
+.plain li{margin-bottom:6px;max-width:54ch}
+.plain li::marker{color:var(--accent)}
+.budget{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+.budget td{padding:5px 0;border-bottom:1px solid var(--line)}
+.budget td:last-child{text-align:right;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.budget tr:last-child td{border-bottom:0;font-weight:700}
+footer{margin:34px 0 8px;color:var(--muted);font-size:12.5px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="kicker">One afternoon &middot; four of you &middot; July 2026</div>
+  <h1>Roma Segreta</h1>
+  <p class="sub">Three hours in the Rome no tour bus finds: a hundred cats guarding Caesar's murder scene, a frescoed courtyard office workers walk through blind, a drowned city under the Trevi &mdash; and a gelato dare to close it out.</p>
+  <div class="progress" aria-hidden="true">
+    <div class="bar"><i id="progFill"></i></div>
+    <span class="count" id="progText"></span>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════ ITINERARY ══════════════════ -->
+<section id="panel-day" role="tabpanel" aria-labelledby="tab-day" class="active">
+  <h2>The loop</h2>
+  <p class="lede">One tight walking loop in the centro storico &mdash; about 2&nbsp;km on foot, no rides between stops. Core loop is 2&frac12; hours (14:30&ndash;17:10); at 17:15 it forks &mdash; bone crypt, or the shopping run (Shop tab), or both if legs allow. Tap a stop for the story; tick it off as you go.</p>
+  <div id="stops"></div>
+
+  <h2>What got cut</h2>
+  <p class="lede">The full-day version had the Aventine keyhole, Rome's pyramid, the Testaccio market and the fairy-tale Coppedè district &mdash; all listed under Tips as "for another visit." This loop keeps the four things nobody back home will believe.</p>
+</section>
+
+<!-- ══════════════════ HUNT ══════════════════ -->
+<section id="panel-hunt" role="tabpanel" aria-labelledby="tab-hunt">
+  <h2>The photo hunt</h2>
+  <p class="lede">For the two of you with the better phones. Six shots, one afternoon. Loser of the sibling face-off buys the gelato tomorrow.</p>
+  <div class="score"><span class="big" id="huntScore">0</span><span class="of">of 6 captured</span></div>
+  <div id="hunt"></div>
+</section>
+
+<!-- ══════════════════ FOOD ══════════════════ -->
+<section id="panel-food" role="tabpanel" aria-labelledby="tab-food">
+  <h2>The eating plan</h2>
+  <p class="lede">The loop's built-in stop is the gelato, but here's the before, the after, and the morning-after &mdash; all standing up, all things Romans actually queue for.</p>
+  <div id="food"></div>
+</section>
+
+<!-- ══════════════════ SHOP ══════════════════ -->
+<section id="panel-shop" role="tabpanel" aria-labelledby="tab-shop">
+  <h2>The shopping run</h2>
+  <p class="lede">No souvenir stands, no "I ♥ Roma" shirts. A 273-year-old potion shop at the start of the loop, and a 17:15 fork instead of (or after) the crypt: a marble workshop north, teen vintage south. Both are a 12&ndash;15 minute walk from the gelato.</p>
+  <div id="shop"></div>
+</section>
+
+<!-- ══════════════════ TIPS ══════════════════ -->
+<section id="panel-tips" role="tabpanel" aria-labelledby="tab-tips">
+  <h2>Before you go</h2>
+  <div id="tips"></div>
+</section>
+
+</main>
+
+<footer>Una famiglia, un pomeriggio &middot; verified July 2026 &middot; hours change &mdash; glance at official sites the night before</footer>
+</div>
+
+<nav aria-label="Sections">
+  <div class="row">
+    <button id="tab-day"  role="tab" aria-selected="true"  aria-controls="panel-day"><span class="glyph">I</span>Route</button>
+    <button id="tab-hunt" role="tab" aria-selected="false" aria-controls="panel-hunt"><span class="glyph">II</span>Hunt</button>
+    <button id="tab-food" role="tab" aria-selected="false" aria-controls="panel-food"><span class="glyph">III</span>Food</button>
+    <button id="tab-shop" role="tab" aria-selected="false" aria-controls="panel-shop"><span class="glyph">IV</span>Shop</button>
+    <button id="tab-tips" role="tab" aria-selected="false" aria-controls="panel-tips"><span class="glyph">V</span>Tips</button>
+  </div>
+</nav>
+
+<script>
+/* ─────────────────────────── data ─────────────────────────── */
+const STOPS = [
+{
+  id:"cats", time:"14:30", title:"Caesar's assassination spot — now run by cats", area:"Largo di Torre Argentina · start here",
+  hook:"The exact place Julius Caesar was stabbed on the Ides of March, 44 BC, is today a sunken ruin field ruled by a colony of about 100 rescue cats. Rome shrugged and made it official.",
+  story:"These four temples are older than the Colosseum by centuries, and the theater complex behind them held the senate meeting where Caesar got his 23 stab wounds — 'Et tu, Brute?' happened within these walls. When the site was excavated in 1929, Rome's strays moved in immediately, and the gattare (cat ladies, including the actress who played the Bond girl in 'Moonraker') fought to keep them. Since 2023 a walkway lets you go down among the ruins; the sanctuary itself is free, cuddles included.",
+  teen:"A cat sanctuary INSIDE an ancient murder scene. This sells itself. The sanctuary entrance is on the Via di Torre Argentina corner — it's open from 12:00, so a 14:30 start walks right in. Budget 40 minutes.",
+  photo:"Hunt item: a cat lounging on 2,000-year-old marble.",
+  tiktok:"Slow zoom on the laziest cat, text overlay: 'Day 730,000 guarding the spot where Caesar was stabbed.' Or open a series: 'Things in Rome older than the Colosseum' — these temples beat it by four centuries.",
+  practical:[["Cost","Walkway €6 adult / €5 ages 6–25 — sanctuary free"],["Open","Site Tue–Sun 9:30–19:00; sanctuary 12:00–16:30. Both closed Mon"],["Getting there","Taxi or bus to Largo di Torre Argentina — the loop starts here"]],
+  maps:"Largo di Torre Argentina, Rome",
+  chips:[["€6 / €5",""],["CATS","teen"],["CLOSED MON","warn"]]
+},
+{
+  id:"sciarra", time:"15:20", title:"Galleria Sciarra — the courtyard nobody looks up in", area:"Via Marco Minghetti · 12-min walk",
+  hook:"An office-building shortcut that happens to be a four-story Art Nouveau jewel box, frescoed floor to skylight in 1888 — and completely free, because technically it's just a hallway.",
+  story:"The Sciarra family built it as the swaggering entrance to their offices when Rome had just become Italy's capital and money was loud. Painter Giuseppe Cellini covered every wall with a cycle called the Glorification of Women — Justice, Strength, Fidelity, Patience — under a glass roof that makes the gold glow. Office workers stride through it daily without lifting their eyes. You will do better.",
+  teen:"Two minutes, zero queue, and it out-photographs most museums. Look straight up for the skylight shot.",
+  photo:"Straight-up ceiling shot from the center of the courtyard.",
+  tiktok:"Stand dead center, camera up at 0.5×, slow spin under the frescoes and skylight. Hook: 'Office workers walk through this hallway every day without looking up.'",
+  practical:[["Cost","Free"],["Open","Weekday office hours (roughly 9:00–19:00); on weekends peek from the gate"],["Walk","12 min from Largo Argentina"]],
+  maps:"Galleria Sciarra, Via Marco Minghetti, Rome",
+  chips:[["FREE",""],["WEEKDAYS BEST","warn"]]
+},
+{
+  id:"vicus", time:"15:45", title:"The City of Water — under the Trevi Fountain", area:"Vicus Caprarius · Vicolo del Puttarello 25 · 3-min walk",
+  hook:"Nine meters below the tourist scrum at the Trevi, there's a silent, cool, underground Roman apartment block where aqueduct water still shimmers through — the same water that feeds the fountain upstairs.",
+  story:"The Aqua Virgo aqueduct has been running since 19 BC — legend says a young girl (virgo) showed thirsty soldiers the spring, and it never stopped flowing, surviving even the Goths cutting every other aqueduct in 537. Down here you walk through an imperial-era apartment building and the cistern that stores the Trevi's water today. You'll hear it before you see it. When you surface, push through to the fountain and throw the coin: right hand over left shoulder, and know exactly where that water has been for 2,000 years.",
+  teen:"It's 10°C cooler down there at the day's hottest hour, takes 40 minutes, and afterward the Trevi stops being a crowd photo and becomes the roof of something secret.",
+  photo:"The turquoise water over ancient brick, then the coin toss frozen mid-air upstairs.",
+  tiktok:"The transition of the day: film fingertips near the dark cistern water, whip-pan to black, cut to the coin toss above at the Trevi. Caption: 'Same water. 2,000 years apart.' Shoot the underground clip first.",
+  practical:[["Cost","€12 adult / €9 ages 6–17"],["Open","Tue–Sun 11:00–17:00 (last entry 16:30), closed Mon"],["Book","WhatsApp +39 339 7786192, ask for ~15:45 — mandatory weekends, smart always"]],
+  maps:"Vicus Caprarius, Vicolo del Puttarello 25, Rome",
+  chips:[["€12 / €9",""],["BOOK AHEAD","warn"],["UNDERGROUND","teen"]]
+},
+{
+  id:"gelato", time:"16:45", title:"The gelato dare at San Crispino", area:"Via della Panetteria 42 · 2 min from the Trevi",
+  hook:"Two lanes from the Trevi crowds, the gelateria that gelato snobs argue about: wild-honey gelato, ginger-and-cinnamon, Armagnac — served with a straight face by people who treat sugar like a science.",
+  story:"San Crispino spent years famously refusing to serve cones — the owners considered them an insult to the gelato, which lives under steel lids so light can't touch it. Elizabeth Gilbert ate her way through it in 'Eat, Pray, Love,' and the honey flavor (the one the shop is named for) is still the benchmark. It's the anti-tourist-gelato: no neon mountains in the window, just flavor labels and conviction.",
+  teen:"The dare that closes the hunt: each sister picks the OTHER one's flavor. No vanilla, no vetoes, no mercy. Parents must take one spice or liquor flavor between them.",
+  photo:"Hunt item: everyone's dare flavor held up side by side, labels visible.",
+  tiktok:"Reaction cam: each sister films the other's first spoonful of the flavor she was assigned. 'Rating the gelato my sister picked to ruin me.' Parents' Armagnac reaction is the bonus clip.",
+  practical:[["Cost","~€3.50–5 each"],["Open","Daily from 11:00 until past midnight"],["Walk","2 min from the Trevi"]],
+  maps:"Il Gelato di San Crispino, Via della Panetteria 42, Rome",
+  chips:[["FOOD","food"],["GELATO DARE","teen"]]
+},
+{
+  id:"crypt", time:"17:15", title:"Optional hour: the Capuchin bone crypt", area:"Via Vittorio Veneto 27 · 12-min walk",
+  hook:"Six small chapels decorated — chandeliers, rosettes, whole walls — with the bones of 3,700 monks. Beautiful, deeply strange, and absolutely not boring. The 17:15 fork: this, or the shopping run (Shop tab) — or both if legs allow.",
+  story:"When the Capuchin friars moved here in 1631 they brought their dead with them, and over the centuries arranged them into art: a crypt of skulls, a crypt of pelvises, a clock made of vertebrae ticking toward eternity. It isn't meant to be spooky — it's a memento mori, and the friars spell it out on a placard that lands hard at any age: 'What you are now, we once were; what we are now, you shall be.'",
+  teen:"Here's the twist: photography is banned inside. In a whole afternoon of shots, this is the one thing they can't post — which makes it the thing they'll talk about most.",
+  photo:"None allowed inside — that's the point.",
+  tiktok:"Filming is banned inside, and that IS the video: piece-to-camera on Via Veneto right after — 'the one place in Rome you're not allowed to film. Here's what I saw.' Storytime format, no B-roll needed.",
+  practical:[["Cost","~€10, at the door or online"],["Open","Daily 10:00–19:00 (last entry 18:30) — plenty of margin"],["Dress","Shoulders and knees covered — bring the scarf"]],
+  maps:"Museo e Cripta dei Cappuccini, Via Vittorio Veneto 27, Rome",
+  chips:[["OPTIONAL","warn"],["~€10",""],["NO PHOTOS","warn"],["MODEST DRESS","warn"]]
+}
+];
+
+const HUNT = [
+["Cat on ancient marble","A sanctuary cat lounging where senators once plotted."],
+["Straight up in Galleria Sciarra","The frescoed walls converging on the skylight."],
+["The drowned city","Turquoise aqueduct water over 2,000-year-old brick, underground."],
+["Coin toss, frozen","Right hand over left shoulder at the Trevi, coin sharp in mid-air."],
+["The dare flavors","Everyone's gelato at San Crispino, labels visible. No vetoes, no vanilla."],
+["The nasone trick","Block a street fountain's spout with a finger and drink the jet from the top hole, like a Roman. Any nasone on the route counts."]
+];
+
+const FOOD = [
+{n:"The dare: Il Gelato di San Crispino", w:"Via della Panetteria 42 · on the loop, 16:45", p:"Wild-honey gelato under steel lids, ginger-and-cinnamon, Armagnac, meringue with hazelnut. The shop that long refused cones on principle. Each sister picks the other's flavor — that's the rule."},
+{n:"Before the loop: Supplizio", w:"Via dei Banchi Vecchi 143 · 12-min walk west of Largo Argentina", p:"Rome's gourmet temple of the supplì — the fried rice ball with the mozzarella heart that stretches like a telephone cord when torn. Grab one before you start if lunch was thin; if the shutter's down, any 'supplì' sign near Campo de' Fiori will do."},
+{n:"If the evening keeps going: Otaleg", w:"Via di San Cosimato 14a, Trastevere · until midnight", p:"'Gelato' backwards, run by gelato heretic Marco Radicioni: carbonara gelato with crispy guanciale, fig with semi-salted pistachio, watermelon-basil. A 15-min taxi if the family wants dinner in Trastevere's alleys afterward."},
+{n:"Morning-after errand: the maritozzo", w:"Pasticceria Regoli, Via dello Statuto 60 · closed Tue", p:"Rome's breakfast monument since 1916 — a brioche bun split and overfilled with whipped cream. Whoever loses the photo hunt fetches them for the family the next morning."}
+];
+
+const SHOP = [
+{n:"Antica Erboristeria Romana — the potion shop", w:"Via di Torre Argentina 15 · 2 min from the loop's start", p:"Rome's oldest herbalist, pouring elixirs since 1752: walls of hand-labeled wooden drawers, glass jars, herbal teas and bitters that look straight out of a wizard's back room. Buy: a strange tisana or a tiny elixir bottle each. TikTok: slow shelf-pan of the drawers with an apothecary audio — it grades itself. Duck in before the cats, or on the walk out."},
+{n:"La Bottega del Marmoraro — your name in marble", w:"Via Margutta 53 · 15 min north of the Trevi · Mon–Sat 8:00–19:30", p:"A one-room workshop crammed floor to ceiling with engraved marble slabs. For ~€15 the marmoraro chisels anything you want — the family inside joke, in Italian, on real Roman marble — ready within the hour. Via Margutta is the ivy-covered artists' lane from 'Roman Holiday'; Fellini lived here. TikTok: the chisel work is pure ASMR (ask before filming). The souvenir that beats every airport shop forever."},
+{n:"Pifebo — the vintage haul", w:"Via dei Serpenti, Monti · 12 min south-east of the Trevi", p:"Monti's flagship thrift institution: tomato-red rooms, sneakers dangling from the ceiling, racks of leather jackets, 90s sportswear, band tees and Levi's by the kilo-vibe. This one is the daughters' stop — set a budget, start the timer. TikTok: fitting-room GRWM / haul, obviously."},
+{n:"The Monti wander", w:"Via del Boschetto & Via Urbana · same detour as Pifebo", p:"Rome's coolest little quarter: independent designers, secondhand dens, jewelry makers and record shops along two short streets, with Piazza della Madonna dei Monti as the hang-out fountain in the middle. Heads-up: Mercato Monti, the weekend vintage market, runs September–June — it'll be closed in July, so the shops are the show."}
+];
+
+const TIPS = [
+{h:"Book one thing", list:[
+  "Vicus Caprarius (City of Water): WhatsApp +39 339 7786192 — ask for ~15:45. Mandatory on weekends and holidays, recommended always.",
+  "Everything else on the loop is walk-in."
+]},
+{h:"Pick the right day", list:[
+  "Best: Tuesday to Friday — everything is open and Galleria Sciarra's gates are up.",
+  "Saturday works: book Vicus Caprarius and expect to peek at Sciarra from the gate.",
+  "Monday kills the loop: Largo Argentina and Vicus Caprarius are both closed. Don't go Monday."
+]},
+{h:"July survival", list:[
+  "The route hides underground at the hottest hour on purpose — it's 10°C cooler under the Trevi.",
+  "Nasoni: Rome has ~2,500 free cast-iron drinking fountains running cold spring water. Refill bottles as you walk — and see the hunt for the drinking trick.",
+  "One scarf in the bag covers the crypt dress code (shoulders/knees) if you take the optional hour."
+]},
+{h:"Getting around", list:[
+  "Taxi or bus to Largo di Torre Argentina to start; after that the whole loop is on foot — about 2 km total.",
+  "Taxis: use the FREENOW app or official white cars from ranks only.",
+  "Ends near Via Veneto / the Trevi — easy taxi home from either."
+]},
+{h:"The budget, roughly", budget:[
+  ["Largo Argentina walkway (2 × €6 + 2 × €5)","€22"],
+  ["Vicus Caprarius (2 × €12 + 2 × €9)","€42"],
+  ["Gelato × 4","~€16"],
+  ["Core loop total","~€80"],
+  ["Optional crypt (~€10 × 4)","+€40"],
+  ["Optional shopping fork (marble slab ~€15 + vintage budget)","you call it"]
+]},
+{h:"For another visit", list:[
+  "The Aventine keyhole at 8 a.m. — St. Peter's dome through a keyhole, three countries in one squint.",
+  "Rome's pyramid + the Non-Catholic Cemetery — Keats' nameless grave, resident cats.",
+  "Mercato Testaccio — Mordi e Vai's broth-dipped brisket sandwich, box 15.",
+  "Quartiere Coppedè at golden hour — spider palace, the fountain the Beatles jumped into.",
+  "A Trastevere evening: supplì at I Supplì, alleys, Otaleg."
+]}
+];
+
+/* ─────────────────────────── state ─────────────────────────── */
+const KEY = "roma-segreta-v2";
+let state = {done:{}, hunt:{}};
+try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} };
+
+/* ─────────────────────────── render ─────────────────────────── */
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+const stopsEl = document.getElementById("stops");
+stopsEl.innerHTML = STOPS.map(s => `
+  <article class="stop ${state.done[s.id] ? "done" : ""}" id="stop-${s.id}">
+    <div class="when mono" aria-hidden="true">${s.time}</div>
+    <div class="card" data-id="${s.id}">
+      <button class="head" aria-expanded="false">
+        <div class="titleRow"><h3>${esc(s.title)}</h3><span class="chev" aria-hidden="true">&#9660;</span></div>
+        <div class="area">${esc(s.area)}</div>
+        <p class="hook">${esc(s.hook)}</p>
+        <div class="chips">${s.chips.map(([t,k]) => `<span class="chip ${k}">${esc(t)}</span>`).join("")}</div>
+      </button>
+      <div class="body">
+        <h4>The story to tell them</h4>
+        <p>${esc(s.story)}</p>
+        <h4>Why the girls won't be bored</h4>
+        <p>${esc(s.teen)}</p>
+        <h4>The shot</h4>
+        <p>${esc(s.photo)}</p>
+        <h4>The TikTok</h4>
+        <p>${esc(s.tiktok)}</p>
+        <h4>Practical</h4>
+        <dl class="practical">${s.practical.map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
+        <div class="actions">
+          <a class="btn primary" target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(s.maps)}">Open in Maps</a>
+          <button class="btn check" data-check="${s.id}" aria-pressed="${!!state.done[s.id]}">${state.done[s.id] ? "Done" : "Mark done"}</button>
+        </div>
+      </div>
+    </div>
+  </article>`).join("");
+
+document.getElementById("hunt").innerHTML = HUNT.map(([t,d],i) => `
+  <button class="hunt-item" data-hunt="${i}" aria-pressed="${!!state.hunt[i]}">
+    <span class="box" aria-hidden="true">&#10003;</span>
+    <span><span class="t">${esc(t)}</span><br><span class="d">${esc(d)}</span></span>
+  </button>`).join("");
+
+document.getElementById("food").innerHTML = FOOD.map(f => `
+  <div class="plain">
+    <h3>${esc(f.n)}</h3>
+    <div class="where">${esc(f.w)}</div>
+    <p>${esc(f.p)}</p>
+  </div>`).join("");
+
+document.getElementById("shop").innerHTML = SHOP.map(f => `
+  <div class="plain">
+    <h3>${esc(f.n)}</h3>
+    <div class="where">${esc(f.w)}</div>
+    <p>${esc(f.p)}</p>
+  </div>`).join("");
+
+document.getElementById("tips").innerHTML = TIPS.map(t => `
+  <div class="plain">
+    <h3>${esc(t.h)}</h3>
+    ${t.list ? `<ul>${t.list.map(li => `<li>${esc(li)}</li>`).join("")}</ul>` : ""}
+    ${t.budget ? `<table class="budget">${t.budget.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>` : ""}
+  </div>`).join("");
+
+/* ─────────────────────────── behavior ─────────────────────────── */
+function refresh(){
+  const doneN = STOPS.filter(s => state.done[s.id]).length;
+  document.getElementById("progFill").style.width = (doneN / STOPS.length * 100) + "%";
+  document.getElementById("progText").textContent = doneN + "/" + STOPS.length + " stops";
+  document.getElementById("huntScore").textContent = HUNT.filter((_, i) => state.hunt[i]).length;
+}
+refresh();
+
+document.addEventListener("click", e => {
+  const head = e.target.closest(".card .head");
+  if (head && !e.target.closest("[data-check]")) {
+    const card = head.closest(".card");
+    card.classList.toggle("open");
+    head.setAttribute("aria-expanded", card.classList.contains("open"));
+    return;
+  }
+  const check = e.target.closest("[data-check]");
+  if (check) {
+    const id = check.dataset.check;
+    state.done[id] = !state.done[id];
+    if (!state.done[id]) delete state.done[id];
+    check.setAttribute("aria-pressed", !!state.done[id]);
+    check.textContent = state.done[id] ? "Done" : "Mark done";
+    document.getElementById("stop-" + id).classList.toggle("done", !!state.done[id]);
+    save(); refresh();
+    return;
+  }
+  const hunt = e.target.closest("[data-hunt]");
+  if (hunt) {
+    const i = hunt.dataset.hunt;
+    state.hunt[i] = !state.hunt[i];
+    if (!state.hunt[i]) delete state.hunt[i];
+    hunt.setAttribute("aria-pressed", !!state.hunt[i]);
+    save(); refresh();
+    return;
+  }
+  const tab = e.target.closest("nav [role=tab]");
+  if (tab) {
+    document.querySelectorAll("nav [role=tab]").forEach(t => t.setAttribute("aria-selected", t === tab));
+    document.querySelectorAll("main [role=tabpanel]").forEach(p =>
+      p.classList.toggle("active", p.id === tab.getAttribute("aria-controls")));
+    window.scrollTo({top: 0});
+  }
+});
+</script>
+</body>
+</html>
