@@ -97,13 +97,13 @@ nav{
   background:var(--card);border-top:1px solid var(--line);
   padding:6px 8px calc(6px + env(safe-area-inset-bottom));
 }
-nav .row{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+nav .row{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
 nav button{
-  padding:9px 4px 8px;border-radius:10px;text-align:center;
-  font-size:12.5px;font-weight:600;color:var(--muted);
+  padding:9px 2px 8px;border-radius:10px;text-align:center;
+  font-size:11.5px;font-weight:600;color:var(--muted);
   display:flex;flex-direction:column;gap:2px;align-items:center;
 }
-nav button .glyph{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;font-size:17px;line-height:1;font-weight:600}
+nav button .glyph{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;font-size:16px;line-height:1;font-weight:600}
 nav button[aria-selected="true"]{color:var(--accent);background:var(--accent-soft)}
 
 /* ---------- panels ---------- */
@@ -200,6 +200,48 @@ h2{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;
 .hunt-item .d{font-size:13px;color:var(--muted);margin-top:1px}
 .hunt-item[aria-pressed="true"] .t{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
 
+/* ---------- game ---------- */
+.scorebar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);padding:12px 16px;margin:4px 0 14px}
+.scorebar .pts{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:34px;font-weight:600;
+  color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.scorebar .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.scorebar .who{font-size:13px;color:var(--muted);text-align:right}
+.level{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);padding:14px 16px;margin-bottom:10px}
+.level.locked{opacity:.5}
+.level.done-lvl{border-color:var(--accent)}
+.level .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teen);font-weight:700}
+.level h3{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:19px;margin:4px 0 2px;font-weight:600}
+.level .arrive{font-size:14px;color:var(--muted);margin:4px 0 0}
+.level h4{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px;font-weight:700}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;margin-top:8px;font-size:14.5px;background:var(--bg)}
+.opt[disabled]{cursor:default}
+.opt.correct{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.opt.wrong{opacity:.45;text-decoration:line-through}
+.why{font-size:13.5px;color:var(--muted);margin-top:8px;border-left:2px solid var(--accent);padding-left:10px}
+.qq{font-size:14.5px;font-weight:600;margin:10px 0 0;max-width:56ch}
+.pts-tag{font-size:11px;font-weight:700;color:var(--teen);white-space:nowrap}
+.mission{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;background:var(--bg)}
+.mission .box{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--teen);
+  margin-top:1px;display:grid;place-items:center;color:transparent;font-size:13px;font-weight:800}
+.mission[aria-pressed="true"] .box{background:var(--teen);color:var(--card)}
+.mission .mt{font-size:14px;font-weight:600}
+.mission[aria-pressed="true"] .mt{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
+.bigbtn{display:block;width:100%;text-align:center;background:var(--accent);color:var(--card);
+  border:1px solid var(--accent);border-radius:12px;padding:12px;font-weight:700;font-size:15px;margin-top:14px}
+.bigbtn.ghost{background:var(--bg);color:var(--ink);border-color:var(--line)}
+.input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--bg);color:var(--ink);font:inherit;margin-top:8px}
+.final{border:2px solid var(--accent);border-radius:14px;background:var(--accent-soft);
+  padding:18px 16px;margin-bottom:10px;text-align:center}
+.final .t{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:24px;font-weight:600;margin:4px 0}
+.final .s{font-size:15px;color:var(--muted)}
+.tinylink{font-size:12px;color:var(--muted);text-decoration:underline;background:none;margin-top:14px;display:inline-block}
+
 /* ---------- food + tips ---------- */
 .plain{background:var(--card);border:1px solid var(--line);border-radius:14px;
   box-shadow:var(--shadow);padding:14px 16px;margin-bottom:10px}
@@ -231,8 +273,15 @@ footer{margin:34px 0 8px;color:var(--muted);font-size:12.5px;text-align:center}
 
 <main>
 
+<!-- ══════════════════ PLAY ══════════════════ -->
+<section id="panel-play" role="tabpanel" aria-labelledby="tab-play" class="active">
+  <h2>La Caccia Segreta</h2>
+  <p class="lede">The tour, as a game. Four levels across hidden Rome, one unlocked at a time. Points come from questions you can only answer standing there, and from field missions. The bone crypt is the optional boss level. Play solo on each phone &mdash; highest score picks tomorrow's breakfast.</p>
+  <div id="game"></div>
+</section>
+
 <!-- ══════════════════ ITINERARY ══════════════════ -->
-<section id="panel-day" role="tabpanel" aria-labelledby="tab-day" class="active">
+<section id="panel-day" role="tabpanel" aria-labelledby="tab-day">
   <h2>The loop</h2>
   <p class="lede">One tight walking loop in the centro storico &mdash; about 2&nbsp;km on foot, no rides between stops. Core loop is 2&frac12; hours (14:30&ndash;17:10); at 17:15 it forks &mdash; bone crypt, or the shopping run (Shop tab), or both if legs allow. Tap a stop for the story; tick it off as you go.</p>
   <div id="stops"></div>
@@ -276,11 +325,12 @@ footer{margin:34px 0 8px;color:var(--muted);font-size:12.5px;text-align:center}
 
 <nav aria-label="Sections">
   <div class="row">
-    <button id="tab-day"  role="tab" aria-selected="true"  aria-controls="panel-day"><span class="glyph">I</span>Route</button>
-    <button id="tab-hunt" role="tab" aria-selected="false" aria-controls="panel-hunt"><span class="glyph">II</span>Hunt</button>
-    <button id="tab-food" role="tab" aria-selected="false" aria-controls="panel-food"><span class="glyph">III</span>Food</button>
-    <button id="tab-shop" role="tab" aria-selected="false" aria-controls="panel-shop"><span class="glyph">IV</span>Shop</button>
-    <button id="tab-tips" role="tab" aria-selected="false" aria-controls="panel-tips"><span class="glyph">V</span>Tips</button>
+    <button id="tab-play" role="tab" aria-selected="true"  aria-controls="panel-play"><span class="glyph">I</span>Play</button>
+    <button id="tab-day"  role="tab" aria-selected="false" aria-controls="panel-day"><span class="glyph">II</span>Route</button>
+    <button id="tab-hunt" role="tab" aria-selected="false" aria-controls="panel-hunt"><span class="glyph">III</span>Hunt</button>
+    <button id="tab-food" role="tab" aria-selected="false" aria-controls="panel-food"><span class="glyph">IV</span>Food</button>
+    <button id="tab-shop" role="tab" aria-selected="false" aria-controls="panel-shop"><span class="glyph">V</span>Shop</button>
+    <button id="tab-tips" role="tab" aria-selected="false" aria-controls="panel-tips"><span class="glyph">VI</span>Tips</button>
   </div>
 </nav>
 
@@ -404,9 +454,87 @@ const TIPS = [
 ]}
 ];
 
+/* ─────────────────────────── game data ─────────────────────────── */
+const GAME = [
+{ id:"cats", lvl:"Level I", title:"The Murder Scene", time:"14:30",
+  arrive:"Get to Largo di Torre Argentina and find the sunken square below street level.",
+  maps:"Largo di Torre Argentina, Rome",
+  quiz:[
+    {q:"Look down into the square. How many ancient temples can you count?",
+     opts:["Two","Three","Four","Six"], a:2,
+     why:"Four — Republican-era temples, centuries older than the Colosseum. Caesar was stabbed in the theater complex behind them."},
+    {q:"How many stab wounds did Caesar take on the Ides of March?",
+     opts:["3","12","23","50"], a:2,
+     why:"23 — and according to his physician Antistius, only one of them was fatal."}
+  ],
+  missions:[
+    {t:"Spot five different cats among the ruins", pts:15},
+    {t:"Get the shot: a cat lounging on ancient marble", pts:15},
+    {t:"Find the sanctuary entrance (Via di Torre Argentina corner) and meet a resident", pts:10}
+  ]},
+{ id:"sciarra", lvl:"Level II", title:"The Invisible Courtyard", time:"15:20",
+  arrive:"Walk 12 minutes to Via Marco Minghetti and step through the arch nobody looks up in.",
+  maps:"Galleria Sciarra, Via Marco Minghetti, Rome",
+  quiz:[
+    {q:"Look up. The frescoes celebrate the virtues of…",
+     opts:["Emperors","Women","Saints","Bankers"], a:1,
+     why:"Giuseppe Cellini's cycle is called the Glorification of Women — Justice, Strength, Fidelity, Patience (1888)."},
+    {q:"What roofs the courtyard?",
+     opts:["Open sky","An iron-and-glass skylight","Wooden beams","A stone dome"], a:1,
+     why:"An iron-and-glass skylight — high tech for 1888, and the reason the gold glows."}
+  ],
+  missions:[
+    {t:"Shoot the 0.5× slow-spin video from dead center, phone straight up", pts:15},
+    {t:"Count the office workers who pass through without looking up. More than three = point made", pts:10}
+  ]},
+{ id:"vicus", lvl:"Level III", title:"The Drowned City", time:"15:45",
+  arrive:"Three minutes to Vicolo del Puttarello 25. Go underground, nine meters below the Trevi crowds.",
+  maps:"Vicus Caprarius, Vicolo del Puttarello 25, Rome",
+  quiz:[
+    {q:"The aqueduct that still feeds the Trevi is named after…",
+     opts:["A general","A young girl","An emperor","A goddess"], a:1,
+     why:"Aqua Virgo — legend says a girl (virgo) showed thirsty Roman soldiers the spring in 19 BC. It has never stopped flowing."},
+    {q:"Stand still and listen. What do you notice before you see it?",
+     opts:["Wind","Running water","Traffic above","Total silence"], a:1,
+     why:"The water — the same water that erupts from the Trevi upstairs, murmuring through the cistern since 19 BC."}
+  ],
+  missions:[
+    {t:"Clock the temperature drop — it's ~10°C cooler down here at Rome's hottest hour", pts:10},
+    {t:"Upstairs at the fountain: coin toss, right hand over LEFT shoulder, photo mid-air", pts:15},
+    {t:"Film the transition: fingertips near the cistern water, whip pan, cut to the coin toss", pts:20}
+  ]},
+{ id:"gelato", lvl:"Level IV", title:"The Dare", time:"16:45",
+  arrive:"Two minutes to Via della Panetteria 42 — the gelateria with steel lids and strong opinions.",
+  maps:"Il Gelato di San Crispino, Via della Panetteria 42, Rome",
+  quiz:[
+    {q:"For years, San Crispino famously refused to serve…",
+     opts:["Tourists","Cones","Chocolate","Small sizes"], a:1,
+     why:"Cones — the owners considered them an insult to the gelato. That's also why it hides under steel lids: light is the enemy."}
+  ],
+  missions:[
+    {t:"Sisters: each picks the OTHER one's flavor. No vanilla, no vetoes, no mercy", pts:20},
+    {t:"Parents: one spice or liquor flavor between you, eaten without flinching", pts:10},
+    {t:"Line up all four dare flavors, labels visible — the closing shot", pts:15}
+  ]}
+];
+const BOSS = {
+  lvl:"Boss level — optional", title:"The Bone Crypt", time:"17:15",
+  arrive:"12 minutes to Via Vittorio Veneto 27. Shoulders and knees covered. ~€10 at the door.",
+  maps:"Museo e Cripta dei Cappuccini, Via Vittorio Veneto 27, Rome",
+  quiz:[
+    {q:"The friars' placard reads: 'What you are now, we once were; what we are now, you ___'",
+     opts:["shall be","once were","cannot know","must fear"], a:0,
+     why:"'…you shall be.' Not meant to be spooky — a memento mori, arranged in bone by the friars themselves over centuries."}
+  ],
+  missions:[
+    {t:"No photos allowed inside — instead, everyone picks ONE word. Outside, say them at the same time", pts:20},
+    {t:"Find the clock made of vertebrae", pts:20}
+  ]};
+const TITLES = [[300,"Leggenda di Roma Segreta"],[200,"Romano Adottivo"],[100,"Esploratore Urbano"],[0,"Turista con la Mappa"]];
+
 /* ─────────────────────────── state ─────────────────────────── */
 const KEY = "roma-segreta-v2";
-let state = {done:{}, hunt:{}};
+let state = {done:{}, hunt:{}, game:{on:false, name:"", cur:0, arrived:{}, attempts:{}, solved:{}, missions:{}, score:0, boss:"locked"}};
 try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch(e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} };
 
@@ -469,6 +597,183 @@ document.getElementById("tips").innerHTML = TIPS.map(t => `
     ${t.list ? `<ul>${t.list.map(li => `<li>${esc(li)}</li>`).join("")}</ul>` : ""}
     ${t.budget ? `<table class="budget">${t.budget.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>` : ""}
   </div>`).join("");
+
+/* ─────────────────────────── game render ─────────────────────────── */
+const G = () => state.game;
+
+function lvlPoints(prefix){
+  let p = 0;
+  for (const k in G().solved) if (k.startsWith(prefix)) p += G().solved[k];
+  for (const k in G().missions) if (k.startsWith(prefix)) p += G().missions[k];
+  return p;
+}
+
+function quizHTML(level, prefix){
+  return level.quiz.map((qz, qi) => {
+    const k = `${prefix}${qi}`, solved = G().solved[k] != null, tried = G().attempts[k] || [];
+    return `<p class="qq">${esc(qz.q)} <span class="pts-tag">${solved ? "+" + G().solved[k] + " pts" : "20 pts"}</span></p>
+    ${qz.opts.map((o, oi) => {
+      const cls = solved && oi === qz.a ? "opt correct" : tried.includes(oi) ? "opt wrong" : "opt";
+      return `<button class="${cls}" data-opt="${prefix}${qi}:${oi}" ${solved || tried.includes(oi) ? "disabled" : ""}>${esc(o)}</button>`;
+    }).join("")}
+    ${solved ? `<p class="why">${esc(qz.why)}</p>` : ""}`;
+  }).join("");
+}
+
+function missionHTML(level, prefix){
+  return level.missions.map((m, mi) => {
+    const k = `${prefix}m${mi}`, done = G().missions[k] != null;
+    return `<button class="mission" data-mission="${k}:${m.pts}" aria-pressed="${done}">
+      <span class="box" aria-hidden="true">&#10003;</span>
+      <span><span class="mt">${esc(m.t)}</span> <span class="pts-tag">+${m.pts}</span></span>
+    </button>`;
+  }).join("");
+}
+
+function renderGame(){
+  const el = document.getElementById("game");
+  const g = G();
+  if (!g.on){
+    el.innerHTML = `
+      <div class="level">
+        <div class="eyebrow">New game</div>
+        <h3>Who's playing on this phone?</h3>
+        <input class="input" id="playerName" maxlength="24" placeholder="Your name or team name">
+        <p class="arrive">Rules: levels unlock in order. Questions score 20 points first try, 10 on the second, 5 after. Missions are on your honor &mdash; Rome is watching.</p>
+        <button class="bigbtn" data-game-start>Start at Largo Argentina</button>
+      </div>`;
+    return;
+  }
+  let html = `
+    <div class="scorebar">
+      <div><div class="pts">${g.score}</div><div class="lbl">points</div></div>
+      <div class="who">${esc(g.name || "Player")}<br>${g.cur >= GAME.length ? "All levels cleared" : GAME[g.cur].lvl + " of IV"}</div>
+    </div>`;
+
+  html += GAME.map((L, li) => {
+    const pfx = `${li}-`;
+    if (li < g.cur) return `
+      <div class="level done-lvl">
+        <div class="eyebrow">${esc(L.lvl)} &middot; cleared</div>
+        <h3>${esc(L.title)}</h3>
+        <p class="arrive">+${lvlPoints(pfx)} points banked.</p>
+      </div>`;
+    if (li > g.cur) return `
+      <div class="level locked">
+        <div class="eyebrow">${esc(L.lvl)} &middot; locked</div>
+        <h3>?????</h3>
+        <p class="arrive">Clear ${esc(GAME[li-1].lvl)} to unlock.</p>
+      </div>`;
+    if (!g.arrived[li]) return `
+      <div class="level">
+        <div class="eyebrow">${esc(L.lvl)} &middot; ${esc(L.time)}</div>
+        <h3>${esc(L.title)}</h3>
+        <p class="arrive">${esc(L.arrive)}</p>
+        <a class="btn primary" style="margin-top:12px" target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(L.maps)}">Navigate</a>
+        <button class="bigbtn" data-arrive="${li}">We're here — open the level</button>
+      </div>`;
+    return `
+      <div class="level">
+        <div class="eyebrow">${esc(L.lvl)} &middot; live</div>
+        <h3>${esc(L.title)}</h3>
+        <h4>Answer on site</h4>
+        ${quizHTML(L, pfx)}
+        <h4>Field missions</h4>
+        ${missionHTML(L, pfx)}
+        <button class="bigbtn" data-complete="${li}">Bank it &amp; unlock the next level</button>
+      </div>`;
+  }).join("");
+
+  if (g.cur >= GAME.length){
+    if (g.boss === "locked") g.boss = "offered";
+    if (g.boss === "offered") html += `
+      <div class="level">
+        <div class="eyebrow">${esc(BOSS.lvl)}</div>
+        <h3>${esc(BOSS.title)}</h3>
+        <p class="arrive">${esc(BOSS.arrive)}</p>
+        <a class="btn primary" style="margin-top:12px" target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(BOSS.maps)}">Navigate</a>
+        <button class="bigbtn" data-boss-enter>Enter the crypt</button>
+        <button class="bigbtn ghost" data-boss-skip>Skip the boss — go shopping instead</button>
+      </div>`;
+    if (g.boss === "active") html += `
+      <div class="level">
+        <div class="eyebrow">${esc(BOSS.lvl)} &middot; live</div>
+        <h3>${esc(BOSS.title)}</h3>
+        <h4>Answer on site</h4>
+        ${quizHTML(BOSS, "b-")}
+        <h4>Field missions</h4>
+        ${missionHTML(BOSS, "b-")}
+        <button class="bigbtn" data-boss-done>Bank the boss level</button>
+      </div>`;
+    if (g.boss === "done" || g.boss === "skipped"){
+      const title = TITLES.find(t => g.score >= t[0])[1];
+      html += `
+      <div class="final">
+        <div class="s">${esc(g.name || "Player")} &middot; final score</div>
+        <div class="pts" style="font-size:44px;font-family:'Iowan Old Style',Palatino,Georgia,serif;color:var(--accent);font-weight:600">${g.score}</div>
+        <div class="t">${esc(title)}</div>
+        <div class="s">${g.boss === "done" ? "Boss level cleared." : "Boss level skipped — the bones will wait."}</div>
+        <button class="bigbtn" data-copy-share>Copy result to challenge the others</button>
+        <button class="tinylink" data-game-reset>Reset this phone's game</button>
+      </div>`;
+    }
+  }
+  el.innerHTML = html;
+}
+
+document.getElementById("game") && renderGame();
+
+document.addEventListener("click", e => {
+  const g = G();
+  const start = e.target.closest("[data-game-start]");
+  if (start){
+    g.on = true;
+    g.name = (document.getElementById("playerName").value || "").trim();
+    save(); renderGame(); return;
+  }
+  const arrive = e.target.closest("[data-arrive]");
+  if (arrive){ g.arrived[arrive.dataset.arrive] = true; save(); renderGame(); return; }
+  const opt = e.target.closest("[data-opt]");
+  if (opt){
+    const [k, oiRaw] = opt.dataset.opt.split(":");
+    const oi = +oiRaw;
+    const level = k.startsWith("b-") ? BOSS : GAME[+k.split("-")[0]];
+    const qz = level.quiz[+k.match(/(\d+)$/)[1]];
+    if (g.solved[k] != null) return;
+    g.attempts[k] = g.attempts[k] || [];
+    if (oi === qz.a){
+      const pts = g.attempts[k].length === 0 ? 20 : g.attempts[k].length === 1 ? 10 : 5;
+      g.solved[k] = pts; g.score += pts;
+    } else if (!g.attempts[k].includes(oi)){
+      g.attempts[k].push(oi);
+    }
+    save(); renderGame(); return;
+  }
+  const mission = e.target.closest("[data-mission]");
+  if (mission){
+    const [k, pts] = mission.dataset.mission.split(":");
+    if (g.missions[k] != null){ g.score -= g.missions[k]; delete g.missions[k]; }
+    else { g.missions[k] = +pts; g.score += +pts; }
+    save(); renderGame(); return;
+  }
+  const complete = e.target.closest("[data-complete]");
+  if (complete){ g.cur = +complete.dataset.complete + 1; save(); renderGame(); return; }
+  if (e.target.closest("[data-boss-enter]")){ g.boss = "active"; save(); renderGame(); return; }
+  if (e.target.closest("[data-boss-skip]")){ g.boss = "skipped"; save(); renderGame(); return; }
+  if (e.target.closest("[data-boss-done]")){ g.boss = "done"; save(); renderGame(); return; }
+  if (e.target.closest("[data-copy-share]")){
+    const title = TITLES.find(t => g.score >= t[0])[1];
+    const txt = `${g.name || "I"} finished La Caccia Segreta with ${g.score} points — ${title}. Beat that: ${location.href}`;
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
+      () => { e.target.closest("[data-copy-share]").textContent = "Copied — go gloat"; },
+      () => { prompt("Copy your result:", txt); });
+    return;
+  }
+  if (e.target.closest("[data-game-reset]")){
+    state.game = {on:false, name:"", cur:0, arrived:{}, attempts:{}, solved:{}, missions:{}, score:0, boss:"locked"};
+    save(); renderGame(); return;
+  }
+});
 
 /* ─────────────────────────── behavior ─────────────────────────── */
 function refresh(){
